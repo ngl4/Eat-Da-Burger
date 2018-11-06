@@ -1,0 +1,40 @@
+<h1 class="mt-3">EAT - DA - BURGERS!!!</h1>
+
+<h2>Have you devoured???</h2>
+
+<hr>
+<br>
+
+<h3>Here are All Available Burgers: </h3>
+<ul>
+    {{#each burgers}}
+        <li>
+            <p>Burger Name: {{this.burger_name}}</p>
+            <p>Devoured: {{this.devoured}}</p>    
+             {{!--TODO: Add a button for devoured!!!  --}}
+
+        </li>
+    {{/each}}
+</ul>
+
+<hr>
+<br>
+
+<h3>You have Devoured these already: </h3>
+
+{{!-- TODO: Show all the devoured burger --}}
+
+{{!-- TODO: Add a delete button  --}}
+
+{{!-- TODO: Add a reset button to add it back to the available burgers list --}}
+
+<script type="text/javascript">
+
+    //TODO: POST request (ajax call) -- insert a new burger
+
+    //TODO: PUT request -- update an existing burger_name
+
+    //TODO: DELETE request -- delete a burger in the list 
+
+
+</script>
