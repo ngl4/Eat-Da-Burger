@@ -5,36 +5,120 @@
 <hr>
 <br>
 
+<h4>Insert a type of burger you want to devour: </h4>
+{{!-- TODO: An input of inserting burgers to db --}}
+<form class="create-form">
+
+  <div class="form-group">
+    <label for="add_burger">Burger Name:</label>
+    <input type="text" id="new_burger" name="name">
+  </div>
+
+  <button type="submit">Add Burger</button>
+</form>
+
+<hr>
+<br>
+
 <h3>Here are All Available Burgers: </h3>
 <ul>
     {{#each burgers}}
-        <li>
-            <p>Burger Name: {{this.burger_name}}</p>
-            <p>Devoured: {{this.devoured}}</p>    
-             {{!--TODO: Add a button for devoured!!!  --}}
 
-        </li>
+    {{#unless devoured}}
+    <li>
+        <p>Burger Name: {{this.burger_name}}</p>
+        {{!--TODO: Add a button for devoured!!! --}}
+        {{> burgers/burgers-block devoured=true}}
+    </li>
+    {{/unless}}
     {{/each}}
+
 </ul>
+
 
 <hr>
 <br>
 
 <h3>You have Devoured these already: </h3>
 
-{{!-- TODO: Show all the devoured burger --}}
+<div class="w-50 p-3" style="background-color: #eee; height: 300px;">
 
-{{!-- TODO: Add a delete button  --}}
+{{!-- TODO: Show all the devoured burger --}}
+<ul>
+    {{#each burgers}}
+
+    {{#if devoured}}
+    <li>
+        <p>Burger Name: {{this.burger_name}}</p>
+        {{!--TODO: Add a button for devoured!!! --}}
+        {{> burgers/burgers-block devoured=false}}
+    </li>
+    {{/if}}
+    {{/each}}
+
+</ul>
+
+</div>
+
+{{!-- TODO: Add a delete button --}}
 
 {{!-- TODO: Add a reset button to add it back to the available burgers list --}}
 
 <script type="text/javascript">
+$(function() {
 
     //TODO: POST request (ajax call) -- insert a new burger
 
+      $(".create-form").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    var newBurger = {
+      burger_name: $("#new_burger").val().trim(),
+      devoured: '0'
+    };
+
+    // Send the POST request.
+    $.ajax("/api/burgers", {
+      type: "POST",
+      data: newBurger
+    }).then(
+      function() {
+        console.log("created new burger");
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+
     //TODO: PUT request -- update an existing burger_name
 
-    //TODO: DELETE request -- delete a burger in the list 
+    $(".change-devoured").on("click", function(event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    var newDevoured = $(this).data("newdevoured");
+
+    var newDevouredState = {
+      devoured: newDevoured
+    };
+
+    // Send the PUT request.
+    $.ajax("/api/burgers/" + id, {
+      type: "PUT",
+      data: newDevouredState
+    }).then(
+      function() {
+        console.log("changed Devoured to", newDevoured);
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+
+//TODO: DELETE request -- delete a burger in the list 
+
+});
+    
 
 
 </script>

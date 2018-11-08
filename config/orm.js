@@ -5,9 +5,9 @@ var connection = require("../config/connection.js");
 //printQuestionMarks() function
 function printQuestionMarks(num) {
     var arr =[];
-    num.forEach(function(){
+    for (var i = 0; i < num; i++) {
         arr.push("?");
-    });
+      }
     return arr.toString();
 }
 
@@ -65,7 +65,7 @@ var orm = {
         },
     
     updateOne: function(tb, objColVals, condition, cb){
-        var queryString = "UPDATE" + tb;
+        var queryString = "UPDATE " + tb;
 
         queryString += " SET ";
         queryString += objToSql(objColVals);
